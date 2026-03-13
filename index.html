@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ans Technical World</title>
+    <title>Anas Technical World</title>
     <style>
         :root {
             --neon-green: #00ff41;
             --dark-bg: #000800;
-            --matrix-fade: rgba(0, 8, 0, 0.1);
         }
 
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Consolas', 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             background-color: var(--dark-bg);
             color: var(--neon-green);
             overflow: hidden;
@@ -33,44 +32,41 @@
         }
 
         .site-title {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            text-shadow: 0 0 20px var(--neon-green);
-            margin-bottom: 10px;
+            letter-spacing: 5px;
+            text-shadow: 0 0 15px var(--neon-green);
+            margin-bottom: 20px;
             font-weight: bold;
         }
 
         .header-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 3px solid var(--neon-green);
+            width: 250px;
+            height: auto;
+            border: 2px solid var(--neon-green);
             margin-bottom: 25px;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
-            object-fit: cover;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
         }
 
         .admin-panel {
             background: rgba(0, 20, 0, 0.9);
-            padding: 40px;
-            border: 2px solid var(--neon-green);
-            border-top-left-radius: 25px;
-            border-bottom-right-radius: 25px;
+            padding: 30px;
+            border: 1px solid var(--neon-green);
             box-shadow: 0 0 25px rgba(0, 255, 65, 0.2);
         }
 
         input {
             display: block;
             width: 280px;
-            padding: 12px;
+            padding: 15px;
             margin: 15px 0;
             background: #000;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
             text-align: center;
-            font-size: 1rem;
+            font-size: 1.2rem;
             outline: none;
+            letter-spacing: 3px;
         }
 
         button {
@@ -81,32 +77,30 @@
             border: none;
             font-weight: 900;
             cursor: pointer;
-            letter-spacing: 2px;
-            transition: all 0.4s ease;
+            transition: 0.3s;
         }
 
         button:hover {
             background: #fff;
             box-shadow: 0 0 30px #fff;
-            transform: scale(1.02);
         }
 
-        /* --- Loading Scene --- */
+        /* --- Loading Screen --- */
         #loader {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: black;
-            z-index: 999;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
         .spinner {
-            width: 80px;
-            height: 80px;
-            border: 4px solid #002200;
+            width: 60px;
+            height: 60px;
+            border: 4px solid #111;
             border-top: 4px solid var(--neon-green);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -114,7 +108,7 @@
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- Dashboard --- */
+        /* --- Technical Dashboard --- */
         #main-content {
             display: none;
             height: 100vh;
@@ -130,19 +124,18 @@
         }
 
         .hacker-box {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 50px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
             border: 2px solid var(--neon-green);
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
-            animation: pulse 2s infinite;
+            animation: pulse 1.5s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px var(--neon-green); }
-            50% { transform: scale(1.03); box-shadow: 0 0 50px var(--neon-green); }
-            100% { transform: scale(1); box-shadow: 0 0 20px var(--neon-green); }
+            0% { box-shadow: 0 0 10px var(--neon-green); }
+            50% { box-shadow: 0 0 40px var(--neon-green); }
+            100% { box-shadow: 0 0 10px var(--neon-green); }
         }
     </style>
 </head>
@@ -150,59 +143,57 @@
 
     <div id="login-page">
         <div class="site-title">Ans Technical World</div>
-        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=300" class="header-img" alt="Tech">
+        <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" class="header-img" alt="Technical World Header">
         
         <div class="admin-panel">
-            <h2 style="margin-top: 0; font-size: 0.9rem;">ENCRYPTED AUTHENTICATION</h2>
-            <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
-            <input type="password" id="password" placeholder="PASSWORD">
-            <button onclick="handleLogin()">ACCESS SYSTEM</button>
+            <p style="margin: 0 0 10px 0; font-size: 0.8rem;">SECURE ACCESS ONLY</p>
+            <input type="password" id="password" placeholder="ENTER PASSWORD">
+            <button onclick="handleLogin()">LOGIN</button>
         </div>
     </div>
 
     <div id="loader">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; letter-spacing: 5px;">DECRYPTING PROTOCOLS...</p>
+        <p style="margin-top: 20px; letter-spacing: 3px;">INITIALIZING CYBER PROTOCOLS...</p>
     </div>
 
     <div id="main-content">
         <canvas id="matrix"></canvas>
         <div class="hacker-container">
-            <div class="hacker-box" onclick="location.reload()">
-                <h1 style="font-size: 2.5rem; margin: 0;">SYSTEM ACTIVE</h1>
-                <p style="color: #fff; font-weight: bold;">WELCOME TO THE ANS TECHNICAL WORLD</p>
-                <p style="font-size: 0.7rem; color: #888;">[ ETHICAL CYBERCRIME DIVISION ]</p>
+            <div class="hacker-box" onclick="alert('Accessing Encrypted Files...')">
+                <h1 style="margin: 0;">SYSTEM BREACHED</h1>
+                <p>WELCOME TO THE ANS TECHNICAL WORLD</p>
+                <small>[ TAP TO ENTER DATABASE ]</small>
             </div>
         </div>
     </div>
 
     <script>
         function handleLogin() {
-            const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
 
-            // Updated credentials as requested
-            if (user === "anas" && pass === "anas007") {
+            // Updated Password Requirement
+            if (pass === "55122093") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('loader').style.display = 'flex';
 
                 setTimeout(() => {
                     document.getElementById('loader').style.display = 'none';
-                    initDashboard();
-                }, 2500); 
+                    unlockSystem();
+                }, 3000); 
             } else {
-                alert("ACCESS DENIED: Credentials mismatch.");
+                alert("INVALID ACCESS KEY");
             }
         }
 
-        function initDashboard() {
+        function unlockSystem() {
             document.getElementById('main-content').style.display = 'block';
             
-            // Audio: Welcome Sound via Speech Synthesis
-            const welcomeMsg = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
-            welcomeMsg.pitch = 0.6; // Deep technical voice
-            welcomeMsg.rate = 0.8;
-            window.speechSynthesis.speak(welcomeMsg);
+            // Audio Welcome
+            const speech = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
+            speech.pitch = 0.5; // Robotic tone
+            speech.rate = 0.8;
+            window.speechSynthesis.speak(speech);
 
             startMatrix();
         }
@@ -213,224 +204,23 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            const chars = "ANS_TECHNICAL_WORLD_CYBER_ETHICAL_HACKER_010101";
+            const words = "ETHICAL_CYBERCRIME_ANS_TECHNICAL_WORLD_HACK_SYSTEM_99";
             const drops = Array(Math.floor(canvas.width / 20)).fill(1);
 
             function draw() {
-                ctx.fillStyle = "rgba(0, 8, 0, 0.1)";
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#00ff41";
-                ctx.font = "15px monospace";
+                ctx.fillStyle = "#0f0";
+                ctx.font = "16px monospace";
 
                 drops.forEach((y, i) => {
-                    const text = chars[Math.floor(Math.random() * chars.length)];
+                    const text = words[Math.floor(Math.random() * words.length)];
                     ctx.fillText(text, i * 20, y * 20);
                     if (y * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                     drops[i]++;
                 });
             }
             setInterval(draw, 35);
-        }
-    </script>
-</body>
-</html>
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 10px var(--neon-green);
-            margin-bottom: 20px;
-        }
-
-        .header-img {
-            width: 200px;
-            border-radius: 10px;
-            border: 2px solid var(--neon-green);
-            margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-        }
-
-        .admin-panel {
-            background: rgba(0, 40, 0, 0.8);
-            padding: 30px;
-            border: 1px solid var(--neon-green);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-        }
-
-        input {
-            display: block;
-            width: 250px;
-            padding: 10px;
-            margin: 10px 0;
-            background: black;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background: var(--neon-green);
-            color: black;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: white;
-            box-shadow: 0 0 20px white;
-        }
-
-        /* --- Loading Overlay --- */
-        #loader {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #111;
-            border-top: 5px solid var(--neon-green);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* --- Main Dashboard --- */
-        #main-content {
-            display: none;
-            height: 100vh;
-            position: relative;
-        }
-
-        canvas {
-            position: absolute;
-            top: 0; left: 0;
-            z-index: -1;
-        }
-
-        .hacker-box {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 40px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 2px solid var(--neon-green);
-            text-align: center;
-            cursor: pointer;
-            transition: 0.5s;
-            animation: glow 2s infinite alternate;
-        }
-
-        .hacker-box:hover {
-            transform: translate(-50%, -50%) scale(1.05);
-            background: rgba(0, 255, 0, 0.1);
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 10px var(--neon-green); }
-            to { box-shadow: 0 0 30px var(--neon-green); }
-        }
-    </style>
-</head>
-<body>
-
-    <div id="login-page">
-        <h1 class="site-title"><b>Ans Technical World</b></h1>
-        <img src="https://via.placeholder.com/200x120/000000/00FF00?text=TECH+WORLD" alt="Technical World" class="header-img">
-        
-        <div class="admin-panel">
-            <h3>ADMIN ACCESS</h3>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button onclick="handleLogin()">LOGIN</button>
-        </div>
-    </div>
-
-    <div id="loader">
-        <div class="spinner"></div>
-        <p>BYPASSING FIREWALL...</p>
-    </div>
-
-    <div id="main-content">
-        <canvas id="matrix"></canvas>
-        <div class="hacker-box" onclick="alert('Accessing Cybercrime Database...')">
-            <h2>SYSTEM BREACHED</h2>
-            <p>Welcome to the Ans Technical World</p>
-            <p style="font-size: 0.8rem;">[ CLICK TO INITIALIZE ]</p>
-        </div>
-    </div>
-
-    <script>
-        function handleLogin() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-
-            if (user === "admin" && pass === "anas007") {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('loader').style.display = 'flex';
-
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    showDashboard();
-                }, 3000); // 3-second loading
-            } else {
-                alert("Access Denied: Invalid Credentials");
-            }
-        }
-
-        function showDashboard() {
-            document.getElementById('main-content').style.display = 'block';
-            
-            // 1. Text-to-Speech Welcome
-            const msg = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
-            msg.rate = 0.9;
-            msg.pitch = 0.5; // Deeper "hacker" voice
-            window.speechSynthesis.speak(msg);
-
-            // 2. Start Matrix Background
-            initMatrix();
-        }
-
-        // Matrix Animation Script
-        function initMatrix() {
-            const canvas = document.getElementById('matrix');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const words = "ETHICAL CYBERCRIME SECURITY HACKER ANS TECHNICAL WORLD 010101";
-            const letters = words.split("");
-            const fontSize = 16;
-            const columns = canvas.width / fontSize;
-            const drops = [];
-
-            for (let i = 0; i < columns; i++) drops[i] = 1;
-
-            function draw() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#0f0";
-                ctx.font = fontSize + "px arial";
-
-                for (let i = 0; i < drops.length; i++) {
-                    const text = letters[Math.floor(Math.random() * letters.length)];
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                    drops[i]++;
-                }
-            }
-            setInterval(draw, 33);
         }
     </script>
 </body>
