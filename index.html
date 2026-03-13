@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anas Technical World</title>
+    <title>Ans Technical World</title>
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-bg: #000800;
+            --dark-bg: #000500;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+            margin: 0; padding: 0; height: 100%;
             font-family: 'Consolas', monospace;
             background-color: var(--dark-bg);
             color: var(--neon-green);
             overflow: hidden;
         }
 
-        /* --- Login Section --- */
+        /* --- Login Page --- */
         #login-page {
             display: flex;
             flex-direction: column;
@@ -28,174 +26,154 @@
             justify-content: center;
             height: 100vh;
             text-align: center;
-            background: radial-gradient(circle, #001a00 0%, #000 100%);
         }
 
         .site-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 15px var(--neon-green);
+            letter-spacing: 4px;
             margin-bottom: 20px;
             font-weight: bold;
+            text-shadow: 0 0 10px var(--neon-green);
         }
 
-        .header-img {
-            width: 250px;
-            height: auto;
-            border: 2px solid var(--neon-green);
-            margin-bottom: 25px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        /* Circular Image Container */
+        .circle-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--neon-green);
+            overflow: hidden; /* This crops the image into the circle */
+            margin-bottom: 30px;
+            box-shadow: 0 0 25px var(--neon-green);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .circle-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image fills the circle without stretching */
         }
 
         .admin-panel {
-            background: rgba(0, 20, 0, 0.9);
-            padding: 30px;
+            background: rgba(0, 20, 0, 0.8);
+            padding: 25px;
             border: 1px solid var(--neon-green);
-            box-shadow: 0 0 25px rgba(0, 255, 65, 0.2);
+            border-radius: 15px;
         }
 
         input {
-            display: block;
-            width: 280px;
-            padding: 15px;
-            margin: 15px 0;
-            background: #000;
+            display: block; width: 260px; padding: 15px;
+            margin: 10px 0; background: #000;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
-            text-align: center;
-            font-size: 1.2rem;
+            text-align: center; font-size: 1.1rem;
             outline: none;
-            letter-spacing: 3px;
         }
 
         button {
-            width: 100%;
-            padding: 12px;
-            background: var(--neon-green);
-            color: #000;
-            border: none;
-            font-weight: 900;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #fff;
-            box-shadow: 0 0 30px #fff;
+            width: 100%; padding: 12px;
+            background: var(--neon-green); color: #000;
+            border: none; font-weight: bold; cursor: pointer;
         }
 
         /* --- Loading Screen --- */
         #loader {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background: black;
+            z-index: 1000; justify-content: center; align-items: center;
             flex-direction: column;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid #111;
-            border-top: 4px solid var(--neon-green);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* --- Technical Dashboard --- */
+        /* --- Dashboard --- */
         #main-content {
-            display: none;
-            height: 100vh;
+            display: none; height: 100vh; position: relative;
         }
 
         canvas { position: absolute; top: 0; left: 0; z-index: -1; }
 
-        .hacker-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
         .hacker-box {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 40px; background: rgba(0, 0, 0, 0.9);
             border: 2px solid var(--neon-green);
             text-align: center;
-            cursor: pointer;
-            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 50px var(--neon-green);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px var(--neon-green); }
-            50% { box-shadow: 0 0 40px var(--neon-green); }
-            100% { box-shadow: 0 0 10px var(--neon-green); }
+        /* Technical Words Floating (Folds) */
+        .tech-word {
+            position: absolute;
+            color: rgba(0, 255, 65, 0.6);
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatWords 10s linear infinite;
+        }
+
+        @keyframes floatWords {
+            from { transform: translateY(100vh); opacity: 1; }
+            to { transform: translateY(-100vh); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="site-title">Ans Technical World</div>
-        <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" class="header-img" alt="Technical World Header">
+        <div class="site-title"><b>Ans Technical World</b></div>
+        
+        <div class="circle-container">
+            <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" alt="Profile">
+        </div>
         
         <div class="admin-panel">
-            <p style="margin: 0 0 10px 0; font-size: 0.8rem;">SECURE ACCESS ONLY</p>
-            <input type="password" id="password" placeholder="ENTER PASSWORD">
+            <input type="password" id="password" placeholder="PASSWORD">
             <button onclick="handleLogin()">LOGIN</button>
         </div>
     </div>
 
     <div id="loader">
-        <div class="spinner"></div>
-        <p style="margin-top: 20px; letter-spacing: 3px;">INITIALIZING CYBER PROTOCOLS...</p>
+        <div style="width: 50px; height: 50px; border: 5px solid #111; border-top-color: #0f0; border-radius: 50%; animation: spin 1s infinite linear;"></div>
+        <p>SECURE LOGGING...</p>
     </div>
 
     <div id="main-content">
         <canvas id="matrix"></canvas>
-        <div class="hacker-container">
-            <div class="hacker-box" onclick="alert('Accessing Encrypted Files...')">
-                <h1 style="margin: 0;">SYSTEM BREACHED</h1>
-                <p>WELCOME TO THE ANS TECHNICAL WORLD</p>
-                <small>[ TAP TO ENTER DATABASE ]</small>
-            </div>
+        <div id="word-layer"></div> <div class="hacker-box">
+            <h1>ACCESS GRANTED</h1>
+            <p>Welcome to the Ans Technical World</p>
+            <p style="font-size: 0.8rem; color: #fff;">[ Ethical Cybercrime Lab ]</p>
         </div>
     </div>
 
     <script>
         function handleLogin() {
             const pass = document.getElementById('password').value;
-
-            // Updated Password Requirement
             if (pass === "55122093") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('loader').style.display = 'flex';
-
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    unlockSystem();
-                }, 3000); 
+                setTimeout(showDashboard, 2500);
             } else {
-                alert("INVALID ACCESS KEY");
+                alert("Wrong Password");
             }
         }
 
-        function unlockSystem() {
+        function showDashboard() {
+            document.getElementById('loader').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            
-            // Audio Welcome
-            const speech = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
-            speech.pitch = 0.5; // Robotic tone
-            speech.rate = 0.8;
-            window.speechSynthesis.speak(speech);
 
+            // 1. Hindi Voice Welcome
+            const msg = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
+            // Set language to Hindi
+            msg.lang = 'hi-IN'; 
+            msg.rate = 0.9;
+            window.speechSynthesis.speak(msg);
+
+            // 2. Start Effects
             startMatrix();
+            createTechWords();
         }
 
         function startMatrix() {
@@ -203,25 +181,37 @@
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
-            const words = "ETHICAL_CYBERCRIME_ANS_TECHNICAL_WORLD_HACK_SYSTEM_99";
-            const drops = Array(Math.floor(canvas.width / 20)).fill(1);
-
+            const drops = Array(Math.floor(canvas.width/20)).fill(1);
             function draw() {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = "#0f0";
-                ctx.font = "16px monospace";
-
                 drops.forEach((y, i) => {
-                    const text = words[Math.floor(Math.random() * words.length)];
-                    ctx.fillText(text, i * 20, y * 20);
-                    if (y * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    ctx.fillText(Math.floor(Math.random()*2), i*20, y*20);
+                    if(y*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                     drops[i]++;
                 });
             }
             setInterval(draw, 35);
         }
+
+        // Technical "Folds"/Words effect
+        function createTechWords() {
+            const container = document.getElementById('word-layer');
+            const words = ["CYBERCRIME", "FIREWALL", "ENCRYPTION", "MALWARE", "ETHICAL HACKING", "LINUX", "DATABASE", "TROJAN"];
+            
+            setInterval(() => {
+                const span = document.createElement('span');
+                span.className = 'tech-word';
+                span.innerText = words[Math.floor(Math.random() * words.length)];
+                span.style.left = Math.random() * 100 + "vw";
+                span.style.fontSize = (Math.random() * 20 + 10) + "px";
+                container.appendChild(span);
+                
+                setTimeout(() => span.remove(), 10000);
+            }, 800);
+        }
     </script>
+    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
 </body>
 </html>
