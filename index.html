@@ -8,6 +8,7 @@
         :root {
             --neon-green: #00ff41;
             --dark-bg: #000800;
+            --panel-bg: rgba(0, 20, 0, 0.9);
         }
 
         body, html {
@@ -15,6 +16,7 @@
             font-family: 'Consolas', monospace;
             background-color: var(--dark-bg);
             color: var(--neon-green);
+            overflow-x: hidden;
         }
 
         /* --- Login Page --- */
@@ -24,28 +26,32 @@
         }
 
         .site-title {
-            font-size: 2.5rem; text-transform: uppercase; letter-spacing: 3px;
-            text-shadow: 0 0 15px var(--neon-green); margin-bottom: 20px;
+            font-size: 3rem; text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 0 0 20px var(--neon-green); margin-bottom: 20px;
         }
 
         .circle-container {
-            width: 150px; height: 150px; border-radius: 50%;
+            width: 180px; height: 180px; border-radius: 50%;
             border: 3px solid var(--neon-green); overflow: hidden;
-            margin-bottom: 20px; box-shadow: 0 0 20px var(--neon-green);
+            margin-bottom: 30px; box-shadow: 0 0 30px var(--neon-green);
         }
 
         .circle-container img { width: 100%; height: 100%; object-fit: cover; }
 
+        .admin-panel { background: var(--panel-bg); padding: 30px; border: 1px solid var(--neon-green); border-radius: 20px; }
+
         input {
-            display: block; width: 250px; padding: 12px; margin: 10px auto;
+            display: block; width: 280px; padding: 15px; margin: 15px 0;
             background: #000; border: 1px solid var(--neon-green);
-            color: var(--neon-green); text-align: center; outline: none;
+            color: var(--neon-green); text-align: center; font-size: 1.2rem; outline: none;
         }
 
         button {
-            width: 275px; padding: 12px; background: var(--neon-green);
-            color: #000; border: none; font-weight: bold; cursor: pointer;
+            width: 100%; padding: 12px; background: var(--neon-green);
+            color: #000; border: none; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
+
+        button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
 
         /* --- Loader --- */
         #loader {
@@ -54,109 +60,164 @@
         }
 
         /* --- Main Dashboard --- */
-        #main-content { display: none; padding: 20px; }
+        #main-content { display: none; padding: 40px 20px; position: relative; z-index: 10; }
         
         canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-        .links-container {
-            max-width: 900px; margin: 0 auto;
+        #welcome-box {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            padding: 50px; background: rgba(0,0,0,0.95); border: 2px solid var(--neon-green);
+            text-align: center; z-index: 100; box-shadow: 0 0 100px var(--neon-green);
         }
 
-        /* Toolkit Image Style */
-        .toolkit-img {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 2px solid var(--neon-green); display: block;
-            margin: 0 auto 20px auto; box-shadow: 0 0 15px var(--neon-green);
+        /* --- Links Template --- */
+        .links-container {
+            max-width: 1000px; margin: 0 auto; display: none; /* Hidden until welcome box disappears */
+            animation: fadeIn 2s forwards;
         }
 
         .category-section {
-            margin-bottom: 30px; background: rgba(0, 15, 0, 0.8);
-            padding: 15px; border: 1px solid var(--neon-green); border-radius: 10px;
+            margin-bottom: 40px; border: 1px solid rgba(0, 255, 65, 0.3);
+            background: rgba(0, 15, 0, 0.7); padding: 20px; border-radius: 10px;
         }
 
         .category-title {
-            font-size: 1.3rem; color: #fff; border-bottom: 2px solid var(--neon-green);
-            margin-bottom: 15px; padding-bottom: 5px; display: inline-block;
+            font-size: 1.5rem; color: #fff; border-bottom: 2px solid var(--neon-green);
+            display: inline-block; margin-bottom: 20px; padding-bottom: 5px;
         }
 
         .links-grid {
-            display: grid; grid-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-            display: flex; flex-wrap: wrap; gap: 10px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;
         }
 
         .btn {
-            flex: 1 1 250px; padding: 12px; background: rgba(0, 40, 0, 0.8);
+            display: block; padding: 12px; background: rgba(0, 40, 0, 0.8);
             border: 1px solid var(--neon-green); color: var(--neon-green);
             text-decoration: none; text-align: center; font-size: 0.9rem;
-            border-radius: 5px; transition: 0.3s;
+            transition: 0.3s; border-radius: 5px;
         }
 
-        .btn:hover { background: var(--neon-green); color: #000; }
+        .btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes glitchOut { 0% { opacity: 1; } 50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); } 100% { opacity: 0; display: none; } }
+
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="site-title">Ans Technical World</div>
+        <div class="site-title">Anas Technical World</div>
         <div class="circle-container">
             <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" alt="Profile">
         </div>
-        <input type="password" id="password" placeholder="ACCESS KEY">
-        <button onclick="handleLogin()">BYPASS SYSTEM</button>
+        <div class="admin-panel">
+            <input type="password" id="password" placeholder="ACCESS KEY">
+            <button onclick="handleLogin()">BYPASS SYSTEM</button>
+        </div>
     </div>
 
     <div id="loader">
-        <div style="width: 50px; height: 50px; border: 5px solid #111; border-top-color: #0f0; border-radius: 50%; animation: spin 1s infinite linear;"></div>
-        <p>DECRYPTING...</p>
+        <div style="width: 70px; height: 70px; border: 5px solid #111; border-top-color: #0f0; border-radius: 50%; animation: spin 1s infinite linear;"></div>
+        <p style="margin-top: 20px;">DECRYPTING FILES...</p>
     </div>
 
     <div id="main-content">
         <canvas id="matrix"></canvas>
+        
+        <div id="welcome-box">
+            <h1 style="color: #fff;">SYSTEM BY ANAS</h1>
+            <p>Welcome to the Anas Technical World</p>
+            <p style="color: yellow; font-size: 0.8rem;">INITIALIZING TOOLS...</p>
+        </div>
 
-        <div class="links-container">
-            <h1 style="text-align: center; margin-bottom: 10px;">TECHNICAL TOOLKIT 2026</h1>
+        <div class="links-container" id="links-ui">
+            <h1 style="text-align: center; margin-bottom: 50px; text-shadow: 0 0 10px #fff;">TECHNICAL TOOLKIT 2026</h1>
             
-            <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" class="toolkit-img" alt="Profile">
-            
             <div class="category-section">
-                <div class="category-title">Social Tools</div>
-                <div class="links-grid">
-                    <a href="https://whatsapp.com/channel/0029VbBhvirF1YlbC7JAN03p" class="btn">WhatsApp Channel</a>
-                    <a href="https://t.me/zeroxofc_bot" class="btn">WhatsApp Unban Mail</a>
-                    <a href="https://h2-hacker-number-ban.vercel.app/" class="btn">WP Unban Tool</a>
-                    <a href="https://a-new-free-bot-50d087d2d65f.herokuapp.com" class="btn">Free WhatsApp Bot</a>
-                </div>
-            </div>
+    <div class="category-title">Social & Messaging</div>
+    <div class="links-grid">
+        <a href="https://t.me/zeroxofc_bot" class="btn">WHATSAPP UNBAN MAIL</a>
+        <a href="https://h2-hacker-number-ban.vercel.app/" class="btn">WP UNBAN TOOL</a>
+        <a href="https://whats-app-unban-by-pro-x-abhee.vercel.app/" class="btn">WHATSAPP UNBAN 2</a>
+        <a href="https://wp-unban-tool.vercel.app/" class="btn">WHATSAPP UNBAN 3</a>
+        <a href="https://t.me/unlimted_memebers_bot" class="btn">TELEGRAM FREE MEMBERS</a>
+        <a href="https://a-new-free-bot-50d087d2d65f.herokuapp.com" class="btn">FREE WHATSAPP BOT</a>
+        <a href="https://youtube.com/shorts/m5-0ilSNP1U?feature=share" class="btn">WHATSAPP FAKE REACT</a>
+        <a href="https://www.mediafire.com/folder/smcniqg480w0c/Autosave+Contact" class="btn">AUTO CONTACT SAVER</a>
+        <a href="https://www.mediafire.com/file/aigmux8s9bepzxf/TELEGRAM_MODDED.apk/file" class="btn">TELEGRAM OTP FIX</a>
+    </div>
+</div>
 
-            <div class="category-section">
-                <div class="category-title">System Hacking</div>
-                <div class="links-grid">
-                    <a href="https://h2-hacker-data-base-v1-tfrg.vercel.app//file" class="btn">Hack Insta Accounts</a>
-                    <a href="https://www.mediafire.com/file/m5elnssx6cft6ij/PAID_Wi-Fi_HACK.zip/file" class="btn">WiFi Hack 100%</a>
-                    <a href="https://www.mediafire.com/file/du9tybq34i3pbgp/OLD_HACKER.7z/file" class="btn">Phone Hack RAT</a>
-                </div>
-            </div>
+<div class="category-section">
+    <div class="category-title">Premium Apps</div>
+    <div class="links-grid">
+        <a href="https://www.mediafire.com/file/bcmddy9r7onqutd/N3tfl%2521x_premium_by_%2540zerox.apk/file" class="btn">NETFLIX PREMIUM</a>
+        <a href="https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" class="btn">YOUTUBE PREMIUM</a>
+        <a href="https://www.mediafire.com/file/9bdrtv6g6mtmjoz/ChatGPT+Premium_1.0.11.apk/file" class="btn">CHAT GPT PREMIUM</a>
+        <a href="https://zerox-courses.blogspot.com/2025/07/chatgpt-plus-method-by-zerox-body.html?m" class="btn">CHAT GPT PLUS FREE</a>
+        <a href="https://www.mediafire.com/file/x5rl62lab695l5k/SPOTIFY_PREMIUM_BY_%2540ZEROX.apk/file" class="btn">SPOTIFY PREMIUM</a>
+        <a href="https://www.mediafire.com/file/yhgkez597aw2hcw/GB_WHATSAPP_V-32.zip/file" class="btn">GB WHATSAPP ANTIBAN</a>
+        <a href="https://www.mediafire.com/file/9to2uxe06a2hquo/LIGHTROOM_PRESET.zip/file" class="btn">LIGHTROOM PRESETS</a>
+    </div>
+</div>
 
-            <div class="category-section">
-                <div class="category-title">Premium Apps</div>
-                <div class="links-grid">
-                    <a href="https://www.mediafire.com/file/bcmddy9r7onqutd/N3tfl%2521x_premium_by_%2540zerox.apk/file" class="btn">Netflix Premium</a>
-                    <a href="https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" class="btn">YouTube Premium</a>
-                    <a href="https://www.mediafire.com/file/9bdrtv6g6mtmjoz/ChatGPT+Premium_1.0.11.apk/file" class="btn">ChatGPT Premium</a>
-                </div>
-            </div>
+<div class="category-section">
+    <div class="category-title">Data & Tracking</div>
+    <div class="links-grid">
+        <a href="https://h2-hacker-database-2.vercel.app/" class="btn">SIM DATA BASE</a>
+        <a href="https://t.me/oldinfotool_bot" class="btn">SIM DATABASE BOT</a>
+        <a href="https://www.mediafire.com/file/f9g4evp6t9xcrq6/index.html/file" class="btn">SIM DB SOURCE CODE</a>
+        <a href="https://www.mediafire.com/folder/r01749bcfuygl/Track+Mobile" class="btn">TRACK ANY MOBILE</a>
+        <a href="https://drive.google.com/drive/folders/1N_S5B31SDdNd7tZ25YBNwrJdL4AnlK4g?usp=sharing" class="btn">LIVE LOCATION HACK</a>
+        <a href="https://ip-info-tool-seven.vercel.app/" class="btn">IP INFO TOOL</a>
+        <a href="https://image-video-loacter-tool.vercel.app/" class="btn">MEDIA METADATA EXTRACTOR</a>
+        <a href="https://www.mediafire.com/file/zgqebp8gvm79rsm/fix.7z/file" class="btn">CHECK CALL HISTORY</a>
+    </div>
+</div>
 
-            <div class="category-section">
-                <div class="category-title">Hacking Courses</div>
-                <div class="links-grid">
-                    <a href="https://drive.google.com/drive/folders/1zD-JrP4sgIlAedjaLxAMdg_4ArF9IYyN" class="btn">Ethical Hacking</a>
-                    <a href="https://drive.google.com/drive/folders/1ycC5W6bT2anWli1RYARcw0KhvLuWQp6A" class="btn">Website Hacking</a>
-                </div>
-            </div>
+<div class="category-section">
+    <div class="category-title">AI & Media Tools</div>
+    <div class="links-grid">
+        <a href="https://tex-to-video.vercel.app" class="btn">TEXT TO VIDEO GEN</a>
+        <a href="https://smallshorts.com/0tBO94G" class="btn">AI VIDEO GEN 2</a>
+        <a href="https://ai-logo-delta.vercel.app" class="btn">AI LOGO GEN</a>
+        <a href="https://play.google.com/store/apps/details?id=text.to.video.aivideo.generator" class="btn">MAKE AI CAT VIDEO</a>
+        <a href="https://play.google.com/store/apps/details?id=com.catlife.ai" class="btn">MAKE FUNNY AI VIDEO</a>
+        <a href="https://www.mediafire.com/file/vxlt9bxsm31y881/𝘼𝙄_𝙎𝙊𝙉𝙂_𝙄𝙉_𝙍𝙀𝘼𝙇_𝙑𝙊𝙄𝘾𝙀_𝙈𝙀𝙏𝙃𝙊𝘿_𝘽𝙔_𝙏𝙀𝘼𝙈-𝘿𝘼𝙍𝙆'𝙃𝘼𝙏.zip/file" class="btn">AI SONG REAL VOICE</a>
+        <a href="https://ytthumbnl.vercel.app" class="btn">YT THUMBNAIL DOWNLOADER</a>
+        <a href="https://image-text-extractor-omega.vercel.app/" class="btn">IMAGE TEXT EXTRACTOR</a>
+    </div>
+</div>
 
-            <p style="text-align: center; color: #555;">[ System Online ]</p>
+<div class="category-section">
+    <div class="category-title">Web & Dev Tools</div>
+    <div class="links-grid">
+        <a href="https://website-to-apk.vercel.app/" class="btn">WEB TO APK</a>
+        <a href="https://www.view-page-source.com/" class="btn">VIEW WEB SOURCE CODE</a>
+        <a href="https://www.mediafire.com/file/f3e6db23oimqznw/OLD-STUDIO_WEB.zip/fileZ" class="btn">WEBSITE SOURCE CODE</a>
+        <a href="https://www.mediafire.com/file/ofi4ovocz869p8g/SMM_PANEL_SOURCE_CODE_%25E2%259A%25A1.zip/file" class="btn">SMM PANEL SOURCE CODE</a>
+        <a href="https://www.html-code-generator.com/tools/html-encrypt-decrypt" class="btn">HTML ENCRYPT DECRYPT</a>
+        <a href="https://html-code-encryptor.vercel.app/" class="btn">HTML EXTRACTOR</a>
+        <a href="https://www.mediafire.com/file/cb7l5tmpu3wbsag/BIO.html/file" class="btn">VIP WEB BIO HTML</a>
+        <a href="https://www.mediafire.com/file/2bq77gqq8j28euz/WATERMARK_TOOL.zip/file" class="btn">WATERMARK TOOL CODE</a>
+    </div>
+</div>
+
+<div class="category-section">
+    <div class="category-title">Courses & Learning</div>
+    <div class="links-grid">
+        <a href="https://drive.google.com/drive/folders/1zD-JrP4sgIlAedjaLxAMdg_4ArF9IYyN" class="btn">ETHICAL HACKING COURSE</a>
+        <a href="https://drive.google.com/drive/folders/1ycC5W6bT2anWli1RYARcw0KhvLuWQp6A?usp=sharing" class="btn">WEBSITE HACKING COURSE</a>
+        <a href="https://www.mediafire.com/folder/372e5n0e7f3nk/Network+Hacking+Course" class="btn">NETWORK HACKING COURSE</a>
+        <a href="https://www.mediafire.com/file/y78pzecdr5bmj7y/Pubg_Hack_Making_Course.rar/file" class="btn">PUBG HACK MAKE COURSE</a>
+        <a href="https://officialzerox.blogspot.com/2025/07/premium-accounts-cracking-course.html?m=1" class="btn">PASSWORD CRACKING COURSE</a>
+        <a href="https://courses-ai-nine.vercel.app" class="btn">PREMIUM COURSE SITE</a>
+        <a href="https://t.me/coursefinderbyold_studio_bot" class="btn">FREE COURSE BOT</a>
+    </div>
+</div>
+
+            <p style="text-align: center; color: #888;">[ End of Database Anas ]</p>
         </div>
     </div>
 
@@ -166,14 +227,35 @@
             if (pass === "55122093") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('loader').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';
-                    startMatrix();
-                }, 1500);
+                setTimeout(startSystem, 2500);
             } else {
                 alert("ACCESS DENIED");
             }
+        }
+
+        function startSystem() {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+
+            // 1. Hindi Voice Welcome
+            const msg = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
+            msg.lang = 'hi-IN';
+            msg.rate = 0.85;
+            window.speechSynthesis.speak(msg);
+
+            // 2. Start Background
+            startMatrix();
+
+            // 3. Welcome Box disappears after 4 seconds and links show up
+            setTimeout(() => {
+                const welcome = document.getElementById('welcome-box');
+                welcome.style.animation = "glitchOut 1s forwards";
+                setTimeout(() => {
+                    welcome.style.display = 'none';
+                    document.getElementById('links-ui').style.display = 'block';
+                    document.body.style.overflowY = 'auto'; // Enable scrolling for links
+                }, 1000);
+            }, 4000);
         }
 
         function startMatrix() {
@@ -181,7 +263,7 @@
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             const drops = Array(Math.floor(canvas.width/20)).fill(1);
-            setInterval(() => {
+            function draw() {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = "#0f0";
@@ -190,8 +272,10 @@
                     if(y*20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                     drops[i]++;
                 });
-            }, 35);
+            }
+            setInterval(draw, 35);
         }
     </script>
+    <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
 </body>
 </html>
