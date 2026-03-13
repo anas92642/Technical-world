@@ -3,148 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ans Technical World</title>
+    <title>Ans Technical World | Database</title>
     <style>
         :root {
             --neon-green: #00ff41;
-            --dark-bg: #000500;
+            --dark-bg: #000800;
+            --panel-bg: rgba(0, 20, 0, 0.9);
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%;
+            margin: 0; padding: 0; min-height: 100%;
             font-family: 'Consolas', monospace;
             background-color: var(--dark-bg);
             color: var(--neon-green);
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* --- Login Page --- */
         #login-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100vh; text-align: center;
         }
 
         .site-title {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--neon-green);
+            font-size: 3rem; text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 0 0 20px var(--neon-green); margin-bottom: 20px;
         }
 
-        /* Circular Image Container */
         .circle-container {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid var(--neon-green);
-            overflow: hidden; /* This crops the image into the circle */
-            margin-bottom: 30px;
-            box-shadow: 0 0 25px var(--neon-green);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 3px solid var(--neon-green); overflow: hidden;
+            margin-bottom: 30px; box-shadow: 0 0 30px var(--neon-green);
         }
 
-        .circle-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures image fills the circle without stretching */
-        }
+        .circle-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        .admin-panel {
-            background: rgba(0, 20, 0, 0.8);
-            padding: 25px;
-            border: 1px solid var(--neon-green);
-            border-radius: 15px;
-        }
+        .admin-panel { background: var(--panel-bg); padding: 30px; border: 1px solid var(--neon-green); border-radius: 20px; }
 
         input {
-            display: block; width: 260px; padding: 15px;
-            margin: 10px 0; background: #000;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            text-align: center; font-size: 1.1rem;
-            outline: none;
+            display: block; width: 280px; padding: 15px; margin: 15px 0;
+            background: #000; border: 1px solid var(--neon-green);
+            color: var(--neon-green); text-align: center; font-size: 1.2rem; outline: none;
         }
 
         button {
-            width: 100%; padding: 12px;
-            background: var(--neon-green); color: #000;
-            border: none; font-weight: bold; cursor: pointer;
+            width: 100%; padding: 12px; background: var(--neon-green);
+            color: #000; border: none; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        /* --- Loading Screen --- */
+        button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+
+        /* --- Loader --- */
         #loader {
-            display: none; position: fixed; top: 0; left: 0; 
-            width: 100%; height: 100%; background: black;
-            z-index: 1000; justify-content: center; align-items: center;
-            flex-direction: column;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: black; z-index: 2000; justify-content: center; align-items: center; flex-direction: column;
         }
 
-        /* --- Dashboard --- */
-        #main-content {
-            display: none; height: 100vh; position: relative;
+        /* --- Main Dashboard --- */
+        #main-content { display: none; padding: 40px 20px; position: relative; z-index: 10; }
+        
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+        #welcome-box {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            padding: 50px; background: rgba(0,0,0,0.95); border: 2px solid var(--neon-green);
+            text-align: center; z-index: 100; box-shadow: 0 0 100px var(--neon-green);
         }
 
-        canvas { position: absolute; top: 0; left: 0; z-index: -1; }
-
-        .hacker-box {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 40px; background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--neon-green);
-            text-align: center;
-            box-shadow: 0 0 50px var(--neon-green);
+        /* --- Links Template --- */
+        .links-container {
+            max-width: 1000px; margin: 0 auto; display: none; /* Hidden until welcome box disappears */
+            animation: fadeIn 2s forwards;
         }
 
-        /* Technical Words Floating (Folds) */
-        .tech-word {
-            position: absolute;
-            color: rgba(0, 255, 65, 0.6);
-            font-weight: bold;
-            pointer-events: none;
-            animation: floatWords 10s linear infinite;
+        .category-section {
+            margin-bottom: 40px; border: 1px solid rgba(0, 255, 65, 0.3);
+            background: rgba(0, 15, 0, 0.7); padding: 20px; border-radius: 10px;
         }
 
-        @keyframes floatWords {
-            from { transform: translateY(100vh); opacity: 1; }
-            to { transform: translateY(-100vh); opacity: 0; }
+        .category-title {
+            font-size: 1.5rem; color: #fff; border-bottom: 2px solid var(--neon-green);
+            display: inline-block; margin-bottom: 20px; padding-bottom: 5px;
         }
+
+        .links-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;
+        }
+
+        .btn {
+            display: block; padding: 12px; background: rgba(0, 40, 0, 0.8);
+            border: 1px solid var(--neon-green); color: var(--neon-green);
+            text-decoration: none; text-align: center; font-size: 0.9rem;
+            transition: 0.3s; border-radius: 5px;
+        }
+
+        .btn:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes glitchOut { 0% { opacity: 1; } 50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); } 100% { opacity: 0; display: none; } }
+
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="site-title"><b>Ans Technical World</b></div>
-        
+        <div class="site-title">Ans Technical World</div>
         <div class="circle-container">
             <img src="https://i.ibb.co/G3xw6d6S/Screenshot-20260114-230440.jpg" alt="Profile">
         </div>
-        
         <div class="admin-panel">
-            <input type="password" id="password" placeholder="PASSWORD">
-            <button onclick="handleLogin()">LOGIN</button>
+            <input type="password" id="password" placeholder="ACCESS KEY">
+            <button onclick="handleLogin()">BYPASS SYSTEM</button>
         </div>
     </div>
 
     <div id="loader">
-        <div style="width: 50px; height: 50px; border: 5px solid #111; border-top-color: #0f0; border-radius: 50%; animation: spin 1s infinite linear;"></div>
-        <p>SECURE LOGGING...</p>
+        <div style="width: 70px; height: 70px; border: 5px solid #111; border-top-color: #0f0; border-radius: 50%; animation: spin 1s infinite linear;"></div>
+        <p style="margin-top: 20px;">DECRYPTING FILES...</p>
     </div>
 
     <div id="main-content">
         <canvas id="matrix"></canvas>
-        <div id="word-layer"></div> <div class="hacker-box">
-            <h1>ACCESS GRANTED</h1>
+        
+        <div id="welcome-box">
+            <h1 style="color: #fff;">SYSTEM BREACHED</h1>
             <p>Welcome to the Ans Technical World</p>
-            <p style="font-size: 0.8rem; color: #fff;">[ Ethical Cybercrime Lab ]</p>
+            <p style="color: yellow; font-size: 0.8rem;">INITIALIZING TOOLS...</p>
+        </div>
+
+        <div class="links-container" id="links-ui">
+            <h1 style="text-align: center; margin-bottom: 50px; text-shadow: 0 0 10px #fff;">TECHNICAL TOOLKIT 2026</h1>
+            
+            <div class="category-section">
+                <div class="category-title">Social & Messaging</div>
+                <div class="links-grid">
+                    <a href="https://whatsapp.com/channel/0029VbCK2IV3mFY4yc5kUk42" class="btn">WhatsApp Channel</a>
+                    <a href="https://t.me/zeroxofc_bot" class="btn">WhatsApp Unban Mail</a>
+                    <a href="https://h2-hacker-number-ban.vercel.app/" class="btn">WP Unban Tool</a>
+                    <a href="https://wp-unban-tool.vercel.app/" class="btn">WhatsApp Unban 3</a>
+                    <a href="https://t.me/unlimted_memebers_bot" class="btn">Telegram Free Members</a>
+                    <a href="https://a-new-free-bot-50d087d2d65f.herokuapp.com" class="btn">Free WhatsApp Bot</a>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">System & Account Hacking</div>
+                <div class="links-grid">
+                    <a href="https://h2-hacker-data-base-v1-tfrg.vercel.app//file" class="btn">Hack Insta Accounts</a>
+                    <a href="https://www.mediafire.com/file/0870qd38lw6j54w/Instagram_Hack.7z/file" class="btn">Instagram Hack 2</a>
+                    <a href="https://www.mediafire.com/file/i9rb75gcz23a824/Telegram_Hack.7z/file" class="btn">Telegram Hack</a>
+                    <a href="https://www.mediafire.com/file/d1rrrye4q3ksn23/FACEBOOK_HACK.zip/file" class="btn">Facebook Hack</a>
+                    <a href="https://www.mediafire.com/file/m5elnssx6cft6ij/PAID_Wi-Fi_HACK.zip/file" class="btn">WiFi Hack 100%</a>
+                    <a href="https://www.mediafire.com/file/du9tybq34i3pbgp/OLD_HACKER.7z/file" class="btn">Phone Hack RAT</a>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">Premium Modded Apps</div>
+                <div class="links-grid">
+                    <a href="https://www.mediafire.com/file/bcmddy9r7onqutd/N3tfl%2521x_premium_by_%2540zerox.apk/file" class="btn">Netflix Premium</a>
+                    <a href="https://www.mediafire.com/file/ep8skhavdtp9c7m/Youtube_5.3.80.132.apk/file" class="btn">YouTube Premium</a>
+                    <a href="https://www.mediafire.com/file/9bdrtv6g6mtmjoz/ChatGPT+Premium_1.0.11.apk/file" class="btn">ChatGPT Premium</a>
+                    <a href="https://www.mediafire.com/file/x5rl62lab695l5k/SPOTIFY_PREMIUM_BY_%2540ZEROX.apk/file" class="btn">Spotify Premium</a>
+                    <a href="https://www.mediafire.com/file/yhgkez597aw2hcw/GB_WHATSAPP_V-32.zip/file" class="btn">GB WhatsApp Antiban</a>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <div class="category-title">Professional Courses</div>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/drive/folders/1zD-JrP4sgIlAedjaLxAMdg_4ArF9IYyN" class="btn">Ethical Hacking Course</a>
+                    <a href="https://drive.google.com/drive/folders/1ycC5W6bT2anWli1RYARcw0KhvLuWQp6A?usp=sharing" class="btn">Website Hacking Course</a>
+                    <a href="https://www.mediafire.com/folder/372e5n0e7f3nk/Network+Hacking+Course" class="btn">Network Hacking Course</a>
+                    <a href="https://www.mediafire.com/file/y78pzecdr5bmj7y/Pubg_Hack_Making_Course.rar/file" class="btn">PUBG Hack Making</a>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #888;">[ End of Database ]</p>
         </div>
     </div>
 
@@ -154,33 +189,41 @@
             if (pass === "55122093") {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('loader').style.display = 'flex';
-                setTimeout(showDashboard, 2500);
+                setTimeout(startSystem, 2500);
             } else {
-                alert("Wrong Password");
+                alert("ACCESS DENIED");
             }
         }
 
-        function showDashboard() {
+        function startSystem() {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
 
             // 1. Hindi Voice Welcome
             const msg = new SpeechSynthesisUtterance("Welcome to the Ans Technical World");
-            // Set language to Hindi
-            msg.lang = 'hi-IN'; 
-            msg.rate = 0.9;
+            msg.lang = 'hi-IN';
+            msg.rate = 0.85;
             window.speechSynthesis.speak(msg);
 
-            // 2. Start Effects
+            // 2. Start Background
             startMatrix();
-            createTechWords();
+
+            // 3. Welcome Box disappears after 4 seconds and links show up
+            setTimeout(() => {
+                const welcome = document.getElementById('welcome-box');
+                welcome.style.animation = "glitchOut 1s forwards";
+                setTimeout(() => {
+                    welcome.style.display = 'none';
+                    document.getElementById('links-ui').style.display = 'block';
+                    document.body.style.overflowY = 'auto'; // Enable scrolling for links
+                }, 1000);
+            }, 4000);
         }
 
         function startMatrix() {
             const canvas = document.getElementById('matrix');
             const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             const drops = Array(Math.floor(canvas.width/20)).fill(1);
             function draw() {
                 ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
@@ -193,23 +236,6 @@
                 });
             }
             setInterval(draw, 35);
-        }
-
-        // Technical "Folds"/Words effect
-        function createTechWords() {
-            const container = document.getElementById('word-layer');
-            const words = ["CYBERCRIME", "FIREWALL", "ENCRYPTION", "MALWARE", "ETHICAL HACKING", "LINUX", "DATABASE", "TROJAN"];
-            
-            setInterval(() => {
-                const span = document.createElement('span');
-                span.className = 'tech-word';
-                span.innerText = words[Math.floor(Math.random() * words.length)];
-                span.style.left = Math.random() * 100 + "vw";
-                span.style.fontSize = (Math.random() * 20 + 10) + "px";
-                container.appendChild(span);
-                
-                setTimeout(() => span.remove(), 10000);
-            }, 800);
         }
     </script>
     <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
